@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="billInput" value="22, 295, 176, 440, 37, 105, 10, 1100, 86, 52" style="width: 300px;">
+    <button id="run">Calculate</button>
+    <script>
+        const calcTip = (bill) => bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+        const calcAverage = (arr) => {
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            return sum / arr.length;
+        };
+        document.getElementById('run').onclick = () => {
+            const inputVal = document.getElementById('billInput').value;
+            const bills = inputVal.split(',').map(num => Number(num.trim()));
+            
+            const tips = [];
+            const totals = [];
+
+            for (let i = 0; i < bills.length; i++) {
+                const tip = calcTip(bills[i]);
+                tips.push(tip);
+                totals.push(tip + bills[i]);
+            }
+            console.log("Bills Array:", bills);
+            console.log("Tips Array:", tips);
+            console.log("Totals Array:", totals);
+            console.log("Average of Totals:", calcAverage(totals));
+        };
+    </script>
+    
+</body>
+</html>
