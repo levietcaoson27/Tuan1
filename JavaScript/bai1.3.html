@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="d1" type="number" value="97">
+    <input id="d2" type="number" value="112">
+    <input id="d3" type="number" value="101">
+    <input id="k1" type="number" value="109">
+    <input id="k2" type="number" value="95">
+    <input id="k3" type="number" value="123">
+    <button id="click">click</button>
+    <script>
+        document.getElementById('click').onclick = function() {
+            const scoreDolphins = (Number(document.getElementById('d1').value) + 
+                                  Number(document.getElementById('d2').value) + 
+                                  Number(document.getElementById('d3').value)) / 3;
+
+            const scoreKoalas = (Number(document.getElementById('k1').value) + 
+                                 Number(document.getElementById('k2').value) + 
+                                 Number(document.getElementById('k3').value)) / 3;
+
+            console.log(`Dolphins: ${scoreDolphins.toFixed(1)}`);
+            console.log(`Koalas: ${scoreKoalas.toFixed(1)}`);
+
+            if (scoreDolphins > scoreKoalas && scoreDolphins >= 100) {
+                console.log(" Dolphins win the trophy!");
+            } else if (scoreKoalas > scoreDolphins && scoreKoalas >= 100) {
+                console.log(" Koalas win the trophy!");
+            } else if (scoreDolphins === scoreKoalas && scoreDolphins >= 100 && scoreKoalas >= 100) {
+                console.log(" It's a draw and both win the trophy!");
+            } else {
+                console.log(" No team wins the trophy.");
+            }
+        };
+    </script>
+</body>
+</html>
