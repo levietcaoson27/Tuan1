@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <input id="gameData" value='("Davies", "Muller", "Lewandowski", "Kimmich")' style="width: 400px;">
+    <br>
+    <button id="runBtn">Run Challenge</button>
+
+    <script>
+        const game = {
+            team1: 'Bayern Munich',
+            team2: 'Borrussia Dortmund',
+            players: [
+                ['Neuer', 'Pavard', 'Martinez', 'Alaba', 'Davies', 'Kimmich', 'Goretzka', 'Coman', 'Muller', 'Gnarby', 'Lewandowski'],
+                ['Burki', 'Schulz', 'Hummels', 'Akanji', 'Hakimi', 'Weigl', 'Witsel', 'Hazard', 'Brandt', 'Sancho', 'Gotze'],
+            ],
+            score: '4:0',
+            scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+            date: 'Nov 9th, 2037',
+            odds: {
+                team1: 1.33,
+                x: 3.25,
+                team2: 6.5,
+            },
+        };
+
+        const printGoals = function (...players) {
+            console.log(`${players.length} goals were scored by:`);
+            for (let i = 0; i < players.length; i++) {
+                console.log(players[i]);
+            }
+        };
+
+        document.getElementById('runBtn').onclick = () => {
+            const [players1, players2] = game.players;
+
+            const [gk, ...fieldPlayers] = players1;
+
+            const allPlayers = [...players1, ...players2];
+
+            const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+
+            const { odds: { team1, x: draw, team2 } } = game;
+
+            const inputVal = document.getElementById('gameData').value;
+            const inputPlayers = inputVal.split(',').map(p => p.replace(/"/g, '').trim());
+
+            console.log("--- Task 1-5 ---");
+            console.log("GK:", gk);
+            console.log("Field Players:", fieldPlayers);
+            console.log("All Players:", allPlayers);
+            console.log("Final Team 1:", players1Final);
+            console.log("Odds:", team1, draw, team2);
+
+            console.log("--- Task 6: Test Data ---");
+            printGoals(...inputPlayers);
+
+            console.log("--- Task 6: Game Scored ---");
+            printGoals(...game.scored);
+
+            console.log("--- Task 7: Probability ---");
+            team1 < team2 && console.log(`${game.team1} is more likely to win`);
+            team2 < team1 && console.log(`${game.team2} is more likely to win`);
+        };
+    </script>
+</body>
+</html>

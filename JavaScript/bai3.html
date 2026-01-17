@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="tempInput" value="17, 21, 23">
+    
+    <button id="btn">Print Forecast</button>
+
+    <script>
+        const printForecast = function(arr) {
+            let str = "... ";
+            for (let i = 0; i < arr.length; i++) {
+                str += `${arr[i]}°C in ${i + 1} days ... `;
+            }
+            console.log(str);
+        };
+
+        document.getElementById('btn').onclick = () => {
+            const inputVal = document.getElementById('tempInput').value;
+            const temps = inputVal.split(',').map(num => Number(num.trim()));
+            
+            printForecast(temps);
+        };
+    </script>
+</body>
+</html>

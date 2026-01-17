@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Hệ thống điều khiển xe (Constructor Function)</h3>
+    
+    <div>
+        <strong>Xe 1:</strong>
+        <button id="accel1">BMW Tăng tốc</button>
+        <button id="brake1">BMW Phanh</button>
+    </div>
+    <br>
+    <div>
+        <strong>Xe 2:</strong>
+        <button id="accel2">Mercedes Tăng tốc</button>
+        <button id="brake2">Mercedes Phanh</button>
+    </div>
+
+    <script>
+        const Car = function (make, speed) {
+            this.make = make;
+            this.speed = speed;
+        };
+
+        Car.prototype.accelerate = function () {
+            this.speed += 10;
+            console.log(`${this.make} đang chạy với tốc độ: ${this.speed} km/h`);
+        };
+
+        Car.prototype.brake = function () {
+            this.speed -= 5;
+            console.log(`${this.make} đang chạy với tốc độ: ${this.speed} km/h`);
+        };
+
+        const bmw = new Car('BMW', 120);
+        const mercedes = new Car('Mercedes', 95);
+
+        document.getElementById('accel1').onclick = () => bmw.accelerate();
+        document.getElementById('brake1').onclick = () => bmw.brake();
+        
+        document.getElementById('accel2').onclick = () => mercedes.accelerate();
+        document.getElementById('brake2').onclick = () => mercedes.brake();
+
+        console.log("Dữ liệu khởi tạo:");
+        console.log(bmw);
+        console.log(mercedes);
+    </script>
+</body>
+</html>

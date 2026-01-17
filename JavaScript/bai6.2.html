@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="header">Đổi màu tiêu đề</h1>
+    <p>Nhấp vào bất kỳ đâu trên trang để đổi màu.</p>
+    
+    <input type="text" id="colorInput" value="blue">
+    <span>(Nhập màu bạn muốn)</span>
+
+    <script>
+        (function () {
+            const header = document.querySelector('#header');
+            header.style.color = 'red';
+
+            document.body.addEventListener('click', function () {
+                const color = document.getElementById('colorInput').value;
+                header.style.color = color;
+            });
+        })();
+    </script>
+</body>
+</html>

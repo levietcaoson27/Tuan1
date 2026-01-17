@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>    
+    <input type="text" id="team1Name" value="Bayern Munich"><br><br>
+    <input type="text" id="team2Name" value="Borrussia Dortmund"><br><br>
+    <input type="number" id="odd1" value="1.33" step="0.01">
+    <input type="number" id="oddX" value="3.25" step="0.01">
+    <input type="number" id="odd2" value="6.5" step="0.01"><br><br><br>
+    <input type="text" id="scoredInput" value="Lewandowski, Gnarby, Lewandowski, Hummels" style="width: 400px;"><br><br>
+
+    <button id="runBtn">Run Challenge</button>
+
+    <script>
+        document.getElementById('runBtn').onclick = () => {
+            const game = {
+                team1: document.getElementById('team1Name').value,
+                team2: document.getElementById('team2Name').value,
+                scored: document.getElementById('scoredInput').value.split(',').map(s => s.trim()),
+                odds: {
+                    team1: Number(document.getElementById('odd1').value),
+                    x: Number(document.getElementById('oddX').value),
+                    team2: Number(document.getElementById('odd2').value),
+                },
+            };
+
+            console.log("--- BẮT ĐẦU CHALLENGE #2 ---");
+
+            for (const [i, player] of game.scored.entries()) {
+                console.log(`Goal ${i + 1}: ${player}`);
+            }
+
+            const odds = Object.values(game.odds);
+            let average = 0;
+            for (const odd of odds) average += odd;
+            average /= odds.length;
+            console.log(`Average odd: ${average.toFixed(2)}`);
+
+            for (const [team, odd] of Object.entries(game.odds)) {
+                const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+                console.log(`Odd of ${teamStr}: ${odd}`);
+            }
+
+            const scorers = {};
+            for (const player of game.scored) {
+                scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+            }
+            console.log("Scorers object:", scorers);
+        };
+    </script>
+</body>
+</html>

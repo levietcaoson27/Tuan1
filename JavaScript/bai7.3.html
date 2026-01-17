@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label>Nhập tuổi chó:</label><br>
+    <input type="text" id="dogAgesInput" value="5, 2, 4, 1, 15, 8, 3" style="width: 350px;">
+    <br><br>
+    <button id="calcBtn">Calculate Average</button>
+
+    <script>
+        const calcAverageHumanAge = ages => 
+            ages
+                .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+                .filter(age => age >= 18)
+                .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
+        document.getElementById('calcBtn').onclick = function () {
+            const input = document.getElementById('dogAgesInput').value;
+            const ages = input.split(',').map(Number);
+            
+            const avg = calcAverageHumanAge(ages);
+            
+            console.log("--- Chaining Result ---");
+            console.log(`Average Human Age: ${avg.toFixed(2)}`);
+        };
+    </script>
+</body>
+</html>

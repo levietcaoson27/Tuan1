@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .images img { width: 300px; margin: 10px; border: 3px solid #333; }
+        .parallel { border: 5px solid #e67e22 !important; box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button id="part1Btn">Run Part 1: Load & Pause</button>
+        <button id="part2Btn">Run Part 2: Load All (Parallel)</button>
+    </div>
+    <div class="images"></div>
+
+    <script>
+        const imgContainer = document.querySelector('.images');
+
+        const wait = seconds => new Promise(resolve => setTimeout(resolve, seconds * 1000));
+
+        const createImage = function (imgPath) {
+            return new Promise(function (resolve, reject) {
+                const img = document.createElement('img');
+                img.src = imgPath;
+                img.addEventListener('load', () => {
+                    imgContainer.append(img);
+                    resolve(img);
+                });
+                img.addEventListener('error', () => reject(new Error('Image not found')));
+            });
+        };
+
+        const loadNPause = async function () {
+            try {
+                imgContainer.innerHTML = '';
+                let img = await createImage('https://images.unsplash.com/photo-1516259762381-22954d7d3ad2');
+                console.log('Image 1 loaded');
+                await wait(2);
+                img.style.display = 'none';
+
+                img = await createImage('https://images.unsplash.com/photo-1542831371-29b0f74f9713');
+                console.log('Image 2 loaded');
+                await wait(2);
+                img.style.display = 'none';
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        const loadAll = async function (imgArr) {
+            try {
+                imgContainer.innerHTML = '';
+                const imgs = imgArr.map(async imgPath => await createImage(imgPath));
+                console.log('Array of promises:', imgs);
+
+                const imgsEl = await Promise.all(imgs);
+                console.log('Resolved images:', imgsEl);
+
+                imgsEl.forEach(img => img.classList.add('parallel'));
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        document.getElementById('part1Btn').addEventListener('click', loadNPause);
+        document.getElementById('part2Btn').addEventListener('click', () => {
+            loadAll([
+                'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2',
+                'https://images.unsplash.com/photo-1542831371-29b0f74f9713',
+                'https://images.unsplash.com/photo-1506744038136-46273834b3fb'
+            ]);
+        });
+    </script>
+</body>
+</html>

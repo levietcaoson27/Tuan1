@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>    
+    <label>Tốc độ theo dặm (mi/h):</label>
+    <input type="number" id="usSpeedInput" value="75">
+    <button id="setUsSpeed">Thiết lập bằng mi/h</button>
+    <hr>
+    <div>
+        <strong id="carDisplay">Ford: 120 km/h</strong><br><br>
+        <button id="accelBtn">Tăng tốc (+10 km/h)</button>
+        <button id="brakeBtn">Phanh (-5 km/h)</button>
+        <button id="getUsBtn">Xem tốc độ mi/h</button>
+    </div>
+
+    <script>
+        class CarCl {
+            constructor(make, speed) {
+                this.make = make;
+                this.speed = speed;
+            }
+
+            accelerate() {
+                this.speed += 10;
+                console.log(`${this.make} đang chạy: ${this.speed} km/h`);
+                this.updateUI();
+            }
+
+            brake() {
+                this.speed -= 5;
+                console.log(`${this.make} đang chạy: ${this.speed} km/h`);
+                this.updateUI();
+            }
+
+            get speedUS() {
+                return this.speed / 1.6;
+            }
+
+            set speedUS(speed) {
+                this.speed = speed * 1.6;
+                this.updateUI();
+            }
+
+            updateUI() {
+                document.getElementById('carDisplay').textContent = 
+                    `${this.make}: ${this.speed.toFixed(1)} km/h`;
+            }
+        }
+
+        const ford = new CarCl('Ford', 120);
+
+        document.getElementById('accelBtn').onclick = () => ford.accelerate();
+        document.getElementById('brakeBtn').onclick = () => ford.brake();
+        
+        document.getElementById('getUsBtn').onclick = () => {
+            alert(`Tốc độ hiện tại: ${ford.speedUS.toFixed(1)} mi/h`);
+        };
+
+        document.getElementById('setUsSpeed').onclick = () => {
+            const miSpeed = Number(document.getElementById('usSpeedInput').value);
+            ford.speedUS = miSpeed;
+            console.log(`Đã thiết lập tốc độ mới qua mi/h. Tốc độ thực tế: ${ford.speed} km/h`);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Dog Nutrition Study</h3>
+    <p>Dữ liệu JSON của Dogs:</p>
+    <textarea id="dogsInput" style="width: 500px; height: 150px;">
+[
+  {"weight": 22, "curFood": 250, "owners": ["Alice", "Bob"]},
+  {"weight": 8, "curFood": 200, "owners": ["Matilda"]},
+  {"weight": 13, "curFood": 275, "owners": ["Sarah", "John"]},
+  {"weight": 32, "curFood": 340, "owners": ["Michael"]}
+]</textarea>
+    <br><br>
+    <button id="runBtn">Run Study Analysis</button>
+
+    <script>
+        document.getElementById('runBtn').onclick = function() {
+            const dogs = JSON.parse(document.getElementById('dogsInput').value);
+
+            dogs.forEach(dog => (dog.recFood = Math.trunc(dog.weight ** 0.75 * 28)));
+
+            const dogSarah = dogs.find(dog => dog.owners.includes('Sarah'));
+            console.log(`Sarah's dog is eating too ${dogSarah.curFood > dogSarah.recFood ? 'much' : 'little'}`);
+
+            const ownersEatTooMuch = dogs
+                .filter(dog => dog.curFood > dog.recFood * 1.1)
+                .flatMap(dog => dog.owners);
+            
+            const ownersEatTooLittle = dogs
+                .filter(dog => dog.curFood < dog.recFood * 0.9)
+                .flatMap(dog => dog.owners);
+
+            console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+            console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+
+            console.log("Any dog eating exactly recommended:", dogs.some(dog => dog.curFood === dog.recFood));
+
+            const checkOkay = dog => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1;
+            console.log("Any dog eating an okay amount:", dogs.some(checkOkay));
+
+            const dogsOkay = dogs.filter(checkOkay);
+            console.log("Dogs eating okay amount:", dogsOkay);
+
+            const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+            
+            console.log("--- Results Summary ---");
+            console.log("Sorted Dogs (by Recommended Food):", dogsSorted);
+        };
+    </script>
+</body>
+</html>

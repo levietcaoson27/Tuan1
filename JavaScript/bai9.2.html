@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .images img { width: 400px; margin: 20px; border: 5px solid #333; }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <input type="text" id="img1" value="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2" style="width: 300px;">
+        <input type="text" id="img2" value="https://images.unsplash.com/photo-1542831371-29b0f74f9713" style="width: 300px;">
+        <button id="startBtn">Bắt đầu chuỗi tải ảnh</button>
+    </div>
+    
+    <div class="images"></div>
+
+    <script>
+        const wait = function (seconds) {
+            return new Promise(function (resolve) {
+                setTimeout(resolve, seconds * 1000);
+            });
+        };
+
+        const imgContainer = document.querySelector('.images');
+
+        const createImage = function (imgPath) {
+            return new Promise(function (resolve, reject) {
+                const img = document.createElement('img');
+                img.src = imgPath;
+
+                img.addEventListener('load', function () {
+                    imgContainer.append(img);
+                    resolve(img);
+                });
+
+                img.addEventListener('error', function () {
+                    reject(new Error('Image not found'));
+                });
+            });
+        };
+
+        let currentImg;
+
+        document.getElementById('startBtn').addEventListener('click', function() {
+            const path1 = document.getElementById('img1').value;
+            const path2 = document.getElementById('img2').value;
+            imgContainer.innerHTML = '';
+
+            createImage(path1)
+                .then(img => {
+                    currentImg = img;
+                    console.log('Image 1 loaded');
+                    return wait(2);
+                })
+                .then(() => {
+                    currentImg.style.display = 'none';
+                    return createImage(path2);
+                })
+                .then(img => {
+                    currentImg = img;
+                    console.log('Image 2 loaded');
+                    return wait(2);
+                })
+                .then(() => {
+                    currentImg.style.display = 'none';
+                    console.log('Finished chain');
+                })
+                .catch(err => console.error(`Error: ${err.message}`));
+        });
+    </script>
+</body>
+</html>
