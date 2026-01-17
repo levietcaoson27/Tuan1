@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" id="d1">
+    <input type="number" id="d2">
+    <input type="number" id="d3"><br>
+    <input type="number" id="k1">
+    <input type="number" id="k2">
+    <input type="number" id="k3">
+    <button id="btn">Check Winner</button>
+    <script>
+        const calcAverage = (a, b, c) => (a + b + c) / 3;
+        const checkWinner = function (avgDolphins, avgKoalas) {
+            if (avgDolphins >= 2 * avgKoalas) {
+                console.log(`Dolphins win (${avgDolphins} vs. ${avgKoalas})`);
+            } else if (avgKoalas >= 2 * avgDolphins) {
+                console.log(`Koalas win (${avgKoalas} vs. ${avgDolphins})`);
+            } else {
+                console.log("No team wins");
+            }
+        };
+        document.getElementById('btn').onclick = () => {
+            const avgD = calcAverage(
+                Number(document.getElementById('d1').value),
+                Number(document.getElementById('d2').value),
+                Number(document.getElementById('d3').value)
+            );
+
+            const avgK = calcAverage(
+                Number(document.getElementById('k1').value),
+                Number(document.getElementById('k2').value),
+                Number(document.getElementById('k3').value)
+            );
+
+            console.log("Dolphins Average:", avgD);
+            console.log("Koalas Average:", avgK);
+            checkWinner(avgD, avgK);
+        };
+    </script>
+</body>
+</html>
